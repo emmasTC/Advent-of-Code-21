@@ -19,4 +19,7 @@ threeList (x:xs) = addFirstThree (x:xs) 0 0: threeList xs
 main = do (fileName:_) <- getArgs
           contents <- readFile fileName
           let numList = map (read::String->Int) (words contents)
-          print $ length (largerThanPredecessor (threeList numList) 0)
+          print $ "Part 1"
+          print $ length (largerThanPredecessor numList 0) -1 -- need to -1 for the first case as number always greater than 0
+          print $ "Part 2"
+          print $ length (largerThanPredecessor (threeList numList) 0) -- review possible empty list edge case in addFirstThree
