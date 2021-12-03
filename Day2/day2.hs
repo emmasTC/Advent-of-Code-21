@@ -1,8 +1,9 @@
 import System.Environment
 import System.IO
 
-horizontalPosition :: [Int] -> Int
-horizontalPosition x = sum x
+commandTotal:: [[String]] -> String -> Int
+commandTotal [] _ = 0
+commandTotal (x:xs) command = getNumber x command + commandTotal xs command
 
 getNumber:: [String] -> String -> Int
 getNumber [] _ = 0
@@ -13,5 +14,4 @@ getNumber (x: xs) command
 main = do (fileName:_) <- getArgs
           contents <- readFile fileName
           let linesOfFiles = map words (lines contents)
-          print $ linesOfFiles
-          print $ getNumber (head linesOfFiles) "forward"
+          print $ (commandTotal linesOfFiles "forward") * ((commandTotal linesOfFiles "down") - (commandTotal linesOfFiles "up"))
