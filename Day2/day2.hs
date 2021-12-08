@@ -20,12 +20,6 @@ aimDepth (x:xs) d aim
   | otherwise = 0
 
 
-
--- | head x == "forward" = aimDepth xs (d * (getNumber x "forward"))
- -- | head x == "down"    = aimDepth xs (d + (getNumber x "down"))
- -- | head x == "up"    = aimDepth xs (d - (getNumber x "up"))
-
-
 main = do (fileName:_) <- getArgs
           contents <- readFile fileName
           let linesOfFiles = map words (lines contents)
