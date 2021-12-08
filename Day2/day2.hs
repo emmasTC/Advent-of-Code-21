@@ -7,11 +7,27 @@ commandTotal (x:xs) command = getNumber x command + commandTotal xs command
 
 getNumber:: [String] -> String -> Int
 getNumber [] _ = 0
-getNumber (x: xs) command
+getNumber (x:xs) command
  | x == command = (read::String->Int) (head xs)
  | otherwise = 0
+
+aimDepth:: [[String]] -> Int -> Int -> Int
+aimDepth [] _ _= 0
+aimDepth (x:xs) d aim
+  | head x == "forward" = ((aim * (getNumber x "forward"))) + aimDepth xs (d + (aim * (getNumber x "forward"))) aim
+  | head x == "down"    = aimDepth xs d (aim + (getNumber x "down"))
+  | head x == "up"      = aimDepth xs d (aim - (getNumber x "up"))
+  | otherwise = 0
+
+
+
+-- | head x == "forward" = aimDepth xs (d * (getNumber x "forward"))
+ -- | head x == "down"    = aimDepth xs (d + (getNumber x "down"))
+ -- | head x == "up"    = aimDepth xs (d - (getNumber x "up"))
+
 
 main = do (fileName:_) <- getArgs
           contents <- readFile fileName
           let linesOfFiles = map words (lines contents)
-          print $ (commandTotal linesOfFiles "forward") * ((commandTotal linesOfFiles "down") - (commandTotal linesOfFiles "up"))
+          print $ aimDepth linesOfFiles 0 0
+          print $ (commandTotal linesOfFiles "forward") * (aimDepth linesOfFiles 0 0)
